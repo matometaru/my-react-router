@@ -7,13 +7,14 @@ const fetchYesOrNo = async (): Promise<string> => {
 };
 
 const YesOrNo = () => {
-  const { data: answer, error } = useSuspenseQuery({
+  const { data: answer } = useSuspenseQuery({
     queryKey: ['yesOrNo'],
     queryFn: fetchYesOrNo,
+    retry: false,
   });
 
   // if (isLoading) return <p>Loading 2...</p>;
-  if (error) return <p>Error occurred!</p>;
+  // if (error) return <p>Error occurred!</p>;
 
   return <p>{answer}</p>;
 };
