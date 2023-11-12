@@ -1,29 +1,21 @@
-import { useState, useEffect } from "react";
+import { useQuery } from '@tanstack/react-query';
 
 const fetchYesOrNo = async (): Promise<string> => {
   const response = await fetch("https://yesno.wtf/api");
   const data = await response.json();
   return data.answer;
-}
+};
 
 const YesOrNo = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [answer, setAnswer] = useState("")
+  const { data: answer, isLoading, error } = useQuery({
+    queryKey: ['yesOrNo'],
+    queryFn: fetchYesOrNo,
+  });
 
-  useEffect(() => {
-    setIsLoading(true)
-    fetchYesOrNo()
-      .then((answer) => {
-        setAnswer(answer)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
-  }, [])
+  if (isLoading) return <p>Loading 2...</p>;
+  if (error) return <p>Error occurred!</p>;
 
-  if (isLoading) { return <p>Loading...</p> }
-  return (
-      <p>{answer}</p>
-  );
-}
+  return <p>{answer}</p>;
+};
+
 export default YesOrNo;
