@@ -1,10 +1,13 @@
+import { Suspense } from 'react';
 import YesOrNo from "../components/YesOrNo";
 
 const Page4 = () => {
   return (
     <>
       <h1>Yes or No?</h1>
-      <YesOrNo />
+      <Suspense fallback={<p>Loading 1...</p>}>
+        <YesOrNo />
+      </Suspense>
     </>
   );
 }

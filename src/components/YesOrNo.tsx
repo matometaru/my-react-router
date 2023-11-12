@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 const fetchYesOrNo = async (): Promise<string> => {
   const response = await fetch("https://yesno.wtf/api");
@@ -7,12 +7,12 @@ const fetchYesOrNo = async (): Promise<string> => {
 };
 
 const YesOrNo = () => {
-  const { data: answer, isLoading, error } = useQuery({
+  const { data: answer, error } = useSuspenseQuery({
     queryKey: ['yesOrNo'],
     queryFn: fetchYesOrNo,
   });
 
-  if (isLoading) return <p>Loading 2...</p>;
+  // if (isLoading) return <p>Loading 2...</p>;
   if (error) return <p>Error occurred!</p>;
 
   return <p>{answer}</p>;
