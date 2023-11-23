@@ -1,5 +1,6 @@
 import { Outlet, NavLink } from 'react-router-dom';
 import { useMount, useUnmount } from 'react-use';
+import * as Sentry from "@sentry/react";
 
 type Props = {
   children?: React.ReactNode;
@@ -22,7 +23,9 @@ const BaseLayout = (props: Props) => {
         <li><NavLink to="/page-2">Page 2</NavLink></li>
         <li><NavLink to="/page-3">Page 3</NavLink></li>
       </ul>
-      <Outlet />
+      {/* <Sentry.ErrorBoundary fallback={<p>An error has occurred in BaseLayout</p>} showDialog> */}
+        <Outlet />
+      {/* </Sentry.ErrorBoundary> */}
     </div>
   );
 }

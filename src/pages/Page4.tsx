@@ -17,16 +17,11 @@ const ErrorMessage = ({ error }: FallbackProps) => {
   );
 };
 
-const onError = (error: Error, info: { componentStack: string }) => {
-  console.log('error.message', error.message)
-  console.log('info.componentStack:', info.componentStack)
-}
-
 const Page4 = () => {
   return (
     <>
       <h1>Yes or No?</h1>
-      <ErrorBoundary onError={onError} FallbackComponent={ErrorMessage}>
+      <ErrorBoundary FallbackComponent={ErrorMessage}>
         <Suspense fallback={<p>Loading 1...</p>}>
           <YesOrNo />
         </Suspense>

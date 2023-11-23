@@ -13,15 +13,12 @@ export const router = createBrowserRouter([
     children: [
       { path: '/page-1', element: <Page1 /> },
       { path: '/page-2', element: <Page2 /> },
+      { path: '/page-4', element: <Page4 /> },
     ]
   },
   {
     path: '/page-3',
     element: <Page3 />
-  },
-  {
-    path: '/page-4',
-    element: <Page4 />
   },
 ]);
 
