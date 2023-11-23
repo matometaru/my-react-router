@@ -1,11 +1,14 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLoadingDispatch } from '../context/LoadingContext';
 
-const Page1: FC = () => {
-  const { showLoading } = useLoadingDispatch();
+const Page1 = () => {
+  const { showLoading, hideLoading } = useLoadingDispatch();
 
   useEffect(() => {
     showLoading('脳を起動中です...');
+    setTimeout(() => {
+      hideLoading();
+    }, 2000);
   }, []);
 
   return (
