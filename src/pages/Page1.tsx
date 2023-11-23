@@ -5,7 +5,7 @@ const Page1: FC = () => {
   const { showLoading } = useLoadingDispatch();
 
   useEffect(() => {
-    showLoading('ファイルをアップロード中です...');
+    showLoading('脳を起動中です...');
   }, []);
 
   return (
