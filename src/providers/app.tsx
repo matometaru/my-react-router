@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ConfigProvider } from 'antd';
-import { LoadingProvider } from '../context/LoadingContext';
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -16,9 +15,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         },
       }}
     >
-      <LoadingProvider>
-        {children}
-      </LoadingProvider>
+      {children}
     </ConfigProvider>
   );
 };

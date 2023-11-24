@@ -1,11 +1,22 @@
+import { useEffect } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 import { useMount, useUnmount } from 'react-use';
+import { useLoadingStore } from '../stores/loading';
 
 type Props = {
   children?: React.ReactNode;
 };
 
 const BaseLayout = (props: Props) => {
+  const { showLoading, hideLoading } = useLoadingStore();
+
+  useEffect(() => {
+    showLoading('脳を起動中です...');
+    setTimeout(() => {
+      hideLoading();
+    }, 2000);
+  }, []);
+
   useMount(() => {
     console.log('BaseLayout: useMount');
   });
