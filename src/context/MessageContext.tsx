@@ -2,10 +2,14 @@ import { createContext, useContext, ReactNode } from 'react';
 import { message } from 'antd';
 
 type MessageDispatchContextType = {
+  showSuccess: (text: string) => void;
   showInfo: (text: string) => void;
+  showError: (text: string) => void;
 };
 const MessageDispatchContext = createContext<MessageDispatchContextType>({
+  showSuccess: (text: string) => {},
   showInfo: (text: string) => {},
+  showError: (text: string) => {},
 });
 
 type ContextProps = {
@@ -14,12 +18,12 @@ type ContextProps = {
 export const MessageProvider = ({ children }: ContextProps) => {
   const [messageApi, contextHolder] = message.useMessage();
 
-  const showInfo = (text: string) => {
-    messageApi.info(text);
-  };
+  const showSuccess = (text: string) => messageApi.success(text);
+  const showInfo = (text: string) => messageApi.info(text);
+  const showError = (text: string) => messageApi.info(text);
 
   return (
-    <MessageDispatchContext.Provider value={{ showInfo }}>
+    <MessageDispatchContext.Provider value={{ showSuccess, showInfo, showError }}>
       {contextHolder}
       {children}
     </MessageDispatchContext.Provider>
