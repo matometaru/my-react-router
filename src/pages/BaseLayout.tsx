@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 import { useMount, useUnmount } from 'react-use';
 import { useLoadingStore } from '../stores/loading';
+import { useMessageDispatch } from '../context/MessageContext'; 
 
 type Props = {
   children?: React.ReactNode;
@@ -9,11 +10,13 @@ type Props = {
 
 const BaseLayout = (props: Props) => {
   const { showLoading, hideLoading } = useLoadingStore();
+  const { showInfo } = useMessageDispatch();
 
   useEffect(() => {
     showLoading('脳を起動中です...');
     setTimeout(() => {
       hideLoading();
+      showInfo('脳が起動しました。');
     }, 2000);
   }, []);
 

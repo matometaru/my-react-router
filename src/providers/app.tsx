@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ConfigProvider } from 'antd';
+import { MessageProvider } from '../context/MessageContext';
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -15,7 +16,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         },
       }}
     >
-      {children}
+      <MessageProvider>
+        {children}
+      </MessageProvider>
     </ConfigProvider>
   );
 };
