@@ -1,7 +1,7 @@
 import FieldWrapper, { FieldWrapperProps } from './FieldWrapper';
 import { InputNumber } from 'antd'
 
-export type MyInputProps = {
+type MyInputProps = {
   placeholder?: string;
 } & Omit<FieldWrapperProps, 'renderField'>;
 

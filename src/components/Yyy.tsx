@@ -6,6 +6,7 @@ import {
   Radio,
 } from "antd";
 import MyInput from "../components/Form/MyInput";
+import MyBirthday from "../components/Form/MyBirthday";
 import { useForm, Controller, FormProvider } from "react-hook-form";
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,7 +14,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 const schema = z.object({
   email: z.string().min(1, 'email required'),
   age: z.number().min(0, '年齢は0以上で入力してください'),
-  age2: z.number().min(0, '年齢は0以上で入力してください'),
+  birthday: z.string()
+    .refine((val) => {
+      const date = new Date(val);
+      const cutoff = new Date('1990-01-01');
+      return date >= cutoff;
+    }, '誕生日は1990年以降である必要があります'),
   sex: z.enum(['male', 'female']),
   favoriteFruits: z.array(z.string()),
 });
@@ -21,7 +27,7 @@ const schema = z.object({
 type FormValues = {
   email: string;
   age: number;
-  age2: number;
+  birthday: string;
   sex: 'male' | 'female',
   favoriteFruits: string[];
 };
@@ -31,6 +37,7 @@ const InvoiceTable = () => {
     defaultValues: {
       email: "",
       age: 0,
+      birthday: '',
       sex: 'female'
     },
     mode: "onBlur", // バリデーションはblurイベントでトリガーされる。
@@ -41,7 +48,6 @@ const InvoiceTable = () => {
     control,
     handleSubmit,
     watch,
-    formState,
     formState: { isValid, errors }
   } = methods;
 
@@ -59,45 +65,25 @@ const InvoiceTable = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <input
-            {...register(`email`, {
-              required: true
-            })}
-            className="border-2 border-gray-500"
+          <MyInput name="age" label="年齢" placeholder="12" />
+        </div>
+        <div>
+          <MyBirthday
+            name="birthday"
+            onChange={(value) => {
+              methods.setValue('age', value.age);
+              methods.setValue('birthday', value.birthday);
+              methods.trigger('age');
+              methods.trigger('birthday');
+            }}
           />
         </div>
         <div>
-          <Controller
-            name="age"
-            control={control}
-            render={({ field }) => (
-              <>
-                <div className="text-xs	text-left">
-                  <pre>{JSON.stringify(field, null, 2)}</pre>
-                  {/* validationのメッセージを表示するのにformStateを渡す */}
-                  <pre>{JSON.stringify(formState.errors['age'], null, 2)}</pre>
-                </div>
-                <InputNumber {...field} placeholder="年齢を入力してください" />
-                <p role="alert" className="text-sm font-semibold text-red-500">
-                  {formState.errors['age']?.message}
-                </p>
-              </>
-            )}
-          />
-        </div>
-        <div>
-          <MyInput name="age2" label="年齢" placeholder="12" />
-        </div>
-        {/* <div>
           <Controller
             name="sex"
             control={control}
             render={({ field }) => (
               <>
-                <div className="text-xs	text-left">
-                  <pre>{JSON.stringify(field, null, 2)}</pre>
-                  <pre>{JSON.stringify(formState.errors['sex'], null, 2)}</pre>
-                </div>
                 <Radio.Group {...field}>
                   <Radio value="male">Male</Radio>
                   <Radio value="female">Female</Radio>
@@ -105,7 +91,7 @@ const InvoiceTable = () => {
               </>
             )}
           />
-        </div> */}
+        </div>
         {/* <div>
           <Controller
             name="favoriteFruits"
