@@ -13,9 +13,9 @@ type BirthdayProps = {
 };
 
 const Birthday = ({ onChange }: BirthdayProps) => {
-  const [year, setYear] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
+  const [year, setYear] = useState('1990');
+  const [month, setMonth] = useState('01');
+  const [day, setDay] = useState('01');
 
   const calculateAge = (dateString: any) => {
     return dayjs().diff(dayjs(dateString), 'year');
@@ -36,7 +36,6 @@ const Birthday = ({ onChange }: BirthdayProps) => {
   return (
     <Flex align="baseline">
       <Select value={year} onChange={setYear}>
-        <option value="">Year</option>
         {years.map((y) => (
           <option key={y} value={y}>
             {y}
@@ -46,7 +45,6 @@ const Birthday = ({ onChange }: BirthdayProps) => {
       <span>年</span>
 
       <Select value={month} onChange={setMonth}>
-        <option value="">Month</option>
         {months.map((m) => (
           <option key={m} value={m}>
             {m}
@@ -56,7 +54,6 @@ const Birthday = ({ onChange }: BirthdayProps) => {
       <span>月</span>
 
       <Select value={day} onChange={setDay}>
-        <option value="">Day</option>
         {days.map((d) => (
           <option key={d} value={d}>
             {d}

@@ -16,10 +16,8 @@ const FieldWrapper = ({ name, label, renderField }: FieldWrapperProps) => {
       control={control}
       render={({ field }) => (
         <div className="text-left pb-4">
-          <label>
-            { label && (<p className="text-sm font-semibold mb-1">{label}</p>)}
-            {renderField(field)}
-          </label>
+          { label && (<label className="block text-sm font-semibold mb-1">{label}</label>)}
+          {renderField(field)}
           { error && (
             <p role="alert" aria-label={error.message} className="absolute text-sm font-semibold text-red-500">
               {error.message}
