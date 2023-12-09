@@ -70,9 +70,10 @@ const InvoiceTable = () => {
         <div>
           <MyBirthday
             name="birthday"
-            onChange={(value) => {
-              methods.setValue('age', value.age);
-              methods.setValue('birthday', value.birthday);
+            label="誕生日"
+            onChange={({ birthday, age }) => {
+              methods.setValue('age', age);
+              methods.setValue('birthday', birthday);
               methods.trigger('age');
               methods.trigger('birthday');
             }}
